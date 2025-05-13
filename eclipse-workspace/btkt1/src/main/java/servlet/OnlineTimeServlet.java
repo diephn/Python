@@ -1,0 +1,22 @@
+package servlet;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import jakarta.servlet.http.HttpServlet;
+
+public class OnlineTimeServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+
+        if (session.getAttribute("onlineTime") == null) {
+            long currentTime = System.currentTimeMillis();
+            session.setAttribute("onlineTime", currentTime);
+        }
+
+        RequestDispatcher rd = request.getRequestDispatcher("online.jsp");
+        rd.forward(request, response);
+    }
+}
